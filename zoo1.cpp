@@ -53,9 +53,10 @@ public:
 class Bird : public Animal {
 public:
     bool canFly;
+    string featherColor; // Новый атрибут для класса Bird
 
-    Bird(const string& n, int a, int w, bool fly)
-            : Animal(n, a, w), canFly(fly) {}
+    Bird(const string& n, int a, int w, bool fly, const string& color)
+            : Animal(n, a, w), canFly(fly), featherColor(color) {}
 
     void chirp() const {
         cout << name << " is chirping.\n";
@@ -88,9 +89,10 @@ public:
 class Mammal : public Animal {
 public:
     bool hasFur;
+    string furColor; // Новый атрибут для класса Mammal
 
-    Mammal(const string& n, int a, int w, bool fur)
-            : Animal(n, a, w), hasFur(fur) {}
+    Mammal(const string& n, int a, int w, bool fur, const string& color)
+            : Animal(n, a, w), hasFur(fur), furColor(color) {}
 
     void giveBirth() const {
         cout << name << " is giving birth.\n";
@@ -120,9 +122,10 @@ public:
 class Reptile : public Animal {
 public:
     bool isColdBlooded;
+    string scaleType; // Новый атрибут для класса Reptile
 
-    Reptile(const string& n, int a, int w, bool coldBlooded)
-            : Animal(n, a, w), isColdBlooded(coldBlooded) {}
+    Reptile(const string& n, int a, int w, bool coldBlooded, const string& type)
+            : Animal(n, a, w), isColdBlooded(coldBlooded), scaleType(type) {}
 
     void sunbathe() const {
         if (isColdBlooded)
@@ -155,9 +158,10 @@ public:
 class Fish : public Animal {
 public:
     bool livesInSaltwater;
+    string scaleColor; // Новый атрибут для класса Fish
 
-    Fish(const string& n, int a, int w, bool saltwater)
-            : Animal(n, a, w), livesInSaltwater(saltwater) {}
+    Fish(const string& n, int a, int w, bool saltwater, const string& color)
+            : Animal(n, a, w), livesInSaltwater(saltwater), scaleColor(color) {}
 
     void swim() const {
         cout << name << " is swimming.\n";
@@ -179,9 +183,11 @@ public:
 class Amphibian : public Animal {
 public:
     bool canJump;
+    string skinTexture; // Новый атрибут для класса Amphibian
 
-    Amphibian(const string& n, int a, int w, bool jump)
-            : Animal(n, a, w), canJump(jump) {}
+    Amphibian(const string& n, int a, int w, bool jump, const string& texture)
+            : Animal(n, a, w), canJump(jump), skinTexture(texture) {}
+
 
     void jump() const {
         if (canJump)
@@ -206,9 +212,11 @@ public:
 class Dolphin : public Mammal {
 public:
     bool isFriendly;
+    int swimSpeed; // Новый атрибут для класса Dolphin
 
-    Dolphin(const string& n, int a, int w, bool fur, bool friendly)
-            : Mammal(n, a, w, fur), isFriendly(friendly) {}
+    Dolphin(const string& n, int a, int w, bool fur, bool friendly, int speed)
+            : Mammal(n, a, w, fur, "SomeColor"), isFriendly(friendly), swimSpeed(speed) {}
+
 
     void swimWithHumans() const {
         if (isFriendly)
@@ -233,9 +241,10 @@ public:
 class Penguin : public Bird {
 public:
     bool likesCold;
+    string slidePreference; // Новый атрибут для класса Penguin
 
-    Penguin(const string& n, int a, int w, bool fly, bool cold)
-            : Bird(n, a, w, fly), likesCold(cold) {}
+    Penguin(const string& n, int a, int w, bool fly, bool cold, const string& preference)
+            : Bird(n, a, w, fly, "SomeColor"), likesCold(cold), slidePreference(preference) {}
 
     void slideOnIce() const {
         if (likesCold)
@@ -260,9 +269,10 @@ public:
 class Crocodile : public Reptile {
 public:
     bool hasSharpTeeth;
+    int jawStrength; // Новый атрибут для класса Crocodile
 
-    Crocodile(const string& n, int a, int w, bool coldBlooded, bool sharpTeeth)
-            : Reptile(n, a, w, coldBlooded), hasSharpTeeth(sharpTeeth) {}
+    Crocodile(const string& n, int a, int w, bool coldBlooded, bool sharpTeeth, int strength)
+            : Reptile(n, a, w, coldBlooded, "SomeType"), hasSharpTeeth(sharpTeeth), jawStrength(strength) {}
 
     void baskOnRiverbank() const {
         cout << name << " is basking on the riverbank.\n";
@@ -306,6 +316,8 @@ void petAnimal(const Animal& animal) {
 Animal* addAnimalOfType(int type) {
     string name;
     int age, weight;
+    bool hasAttribute; // Новый атрибут
+    string attributeValue; // Новый атрибут
 
     cout << "Enter the name of the new animal: ";
     cin >> name;
@@ -317,22 +329,68 @@ Animal* addAnimalOfType(int type) {
     cin >> weight;
 
     switch (type) {
-        case 1:
-            return new Bird(name, age, weight, true);
-        case 2:
-            return new Mammal(name, age, weight, true);
-        case 3:
-            return new Reptile(name, age, weight, true);
-        case 4:
-            return new Fish(name, age, weight, true);
-        case 5:
-            return new Amphibian(name, age, weight, true);
-        case 6:
-            return new Dolphin(name, age, weight, true, true);
-        case 7:
-            return new Penguin(name, age, weight, false, true);
-        case 8:
-            return new Crocodile(name, age, weight, true, true);
+        case 1: // Bird
+            cout << "Can the bird fly? (1 for true, 0 for false): ";
+            cin >> hasAttribute;
+            cout << "what color feathers does your bird have?";
+            cin >> attributeValue;
+            return new Bird(name, age, weight, hasAttribute, attributeValue);
+
+        case 2: // Mammal
+            cout << "Does the mammal have fur? (1 for true, 0 for false): ";
+            cin >> hasAttribute;
+            if (hasAttribute) {
+                cout << "Enter the fur color of the mammal: ";
+                cin >> attributeValue;
+            }
+            return new Mammal(name, age, weight, hasAttribute, attributeValue);
+
+        case 3: // Reptile
+            cout << "Is the reptile cold-blooded? (1 for true, 0 for false): ";
+            cin >> hasAttribute;
+            cout << "What type is your reptile?";
+            cin >> attributeValue;
+            return new Reptile(name, age, weight, hasAttribute, attributeValue);
+
+        case 4: // Fish
+            cout << "Does the fish live in saltwater? (1 for true, 0 for false): ";
+            cin >> hasAttribute;
+            cout << "what scale does your fish have?";
+            cin >> attributeValue;
+            return new Fish(name, age, weight, hasAttribute, attributeValue);
+
+        case 5: // Amphibian
+            cout << "Can the amphibian jump? (1 for true, 0 for false): ";
+            cin >> hasAttribute;
+            cout << "what skinTexture does your reptile have?";
+            cin >> attributeValue;
+            return new Amphibian(name, age, weight, hasAttribute, attributeValue);
+
+        case 6: // Dolphin
+            cout << "Is the dolphin friendly? (1 for true, 0 for false): ";
+            cin >> hasAttribute;
+            if (hasAttribute) {
+                cout << "Enter the swim speed of the dolphin: ";
+                cin >> attributeValue;
+            }
+            return new Dolphin(name, age, weight, true, hasAttribute, stoi(attributeValue));
+
+        case 7: // Penguin
+            cout << "Does the penguin like the cold? (1 for true, 0 for false): ";
+            cin >> hasAttribute;
+            cout << "Does your penguin like to slide?";
+            cin >> attributeValue;
+            return new Penguin(name, age, weight, false, hasAttribute, attributeValue);
+
+        case 8: // Crocodile
+            cout << "Is the crocodile aggressive? (1 for true, 0 for false): ";
+            cin >> hasAttribute;
+            if (hasAttribute) {
+                cout << "Enter the jaw strength of the crocodile: ";
+                cin >> attributeValue;
+            }
+            return new Crocodile(name, age, weight, true, hasAttribute, stoi(attributeValue));
+
         default:
             return nullptr;
     }
@@ -343,15 +401,15 @@ int main() {
 
     list<Animal*> animals;
 
-    Bird parrot("Polly", 5, 1, true);
-    Mammal dog("Buddy", 3, 10, true);
-    Reptile snake("Sly", 2, 2, true);
-    Fish goldfish("Goldie", 1, 0, true);
-    Amphibian frog("Freddy", 2, 0, true);
+    Bird parrot("Polly", 5, 1, true, "White");
+    Mammal dog("Buddy", 3, 10, true, "black");
+    Reptile snake("Sly", 2, 2, true, "squad Scaly");
+    Fish goldfish("Goldie", 1, 0, true, "gold");
+    Amphibian frog("Freddy", 2, 0, true, "slimy");
 
-    Dolphin dolphin("Flipper", 8, 300, false, true);
-    Penguin penguin("Chilly", 4, 5, false, true);
-    Crocodile crocodile("Snappy", 6, 200, true, true);
+    Dolphin dolphin("Flipper", 8, 300, false, true, 76);
+    Penguin penguin("Chilly", 4, 5, false, true, "yes");
+    Crocodile crocodile("Snappy", 6, 200, true, true,88);
 
     animals.push_back(&parrot);
     animals.push_back(&dog);
