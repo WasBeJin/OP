@@ -1,6 +1,7 @@
 #include <iostream>
-#include <vector>
 #include <cmath>
+#include <limits>
+#include <vector>
 
 using namespace std;
 
@@ -28,26 +29,46 @@ float input() {
     return x;
 }
 
+void performAddition(float a, float b) {
+    cout << a << " + " << b << " = " << (a + b) << endl;
+}
+
+void performSubtraction(float a, float b) {
+    cout << a << " - " << b << " = " << (a - b) << endl;
+}
+
+void performMultiplication(float a, float b) {
+    cout << a << " * " << b << " = " << (a * b) << endl;
+}
+
+void performDivision(float a, float b) {
+    if (b != 0) {
+        cout << a << " / " << b << " = " << (a / b) << endl;
+    } else {
+        cout << "Error: Division by zero!" << endl;
+    }
+}
+
+void performExponentiation(float a, float b) {
+    cout << a << " ^ " << b << " = " << pow(a, b) << endl;
+}
+
 void performOperation(char op, float a, float b) {
     switch (op) {
         case '+':
-            cout << a << " + " << b << " = " << (a + b) << endl;
+            performAddition(a, b);
             break;
         case '-':
-            cout << a << " - " << b << " = " << (a - b) << endl;
+            performSubtraction(a, b);
             break;
         case '*':
-            cout << a << " * " << b << " = " << (a * b) << endl;
+            performMultiplication(a, b);
             break;
         case '/':
-            if (b != 0) {
-                cout << a << " / " << b << " = " << (a / b) << endl;
-            } else {
-                cout << "Error: Division by zero!" << endl;
-            }
+            performDivision(a, b);
             break;
         case '^':
-            cout << a << " ^ " << b << " = " << pow(a, b) << endl;
+            performExponentiation(a, b);
             break;
         default:
             cout << "Invalid operator." << endl;
